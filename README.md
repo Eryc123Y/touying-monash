@@ -109,6 +109,64 @@ Each box features:
 - **Easy syntax** - just use `#boxtype[content]`
 - **Responsive design** that works with the slide layout
 
+## Tables
+
+Monash-styled tables are powered by the tablem package, so you can paste Markdown-like tables directly, with automatic header detection, alignment, and cell merging. Helpers:
+- `monash-three-line-table`: three-line academic style (top/header/bottom rules) in Monash colors
+- `monash-table`: clean striped table with Monash defaults
+
+Note: These helpers are already available when you import the theme as `*`.
+
+### Basic three-line table
+```typst
+#slide[
+  #monash-three-line-table[
+    | *Name* | *Location* | *Height* | *Score* |
+    | :----: | :--------: | :------: | :-----: |
+    | John   | Second St. | 180 cm   | 5       |
+    | Wally  | Third Av.  | 160 cm   | 10      |
+  ]
+]
+```
+
+### Striped table (paste Markdown)
+```typst
+#monash-table[
+  | *Col A* | *Col B* |
+  | ------- | ------- |
+  | a       | b       |
+  | c       | d       |
+]
+```
+
+### Cell merging (horizontal <, vertical ^)
+```typst
+#monash-three-line-table[
+  | A | B | C |
+  |:-:|:-:|:-:|
+  | x | y | < |
+  | ^ | z | z |
+]
+```
+
+### Customize Monash styling
+```typst
+#monash-three-line-table(
+  stroke-color: rgb("#006dae"), // rules color (Monash Blue)
+  header-fill: rgb("#EAF2F5"),  // header row fill
+  stripe: true,
+  stripe-fill: rgb("#F4F8FB"),  // body striping
+  top-stroke: .9pt,
+  mid-stroke: .5pt,
+  bottom-stroke: .9pt,
+)[
+  | *A* | *B* |
+  | --- | --- |
+  | 1   | 2   |
+  | 3   | 4   |
+]
+```
+
 ## Typography Hierarchy
 
 - **Level 1 Headings**: Monash Blue, bold, 1.4em

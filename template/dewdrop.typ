@@ -3,6 +3,7 @@
 // Enhanced with Monash University brand guidelines and color scheme
 
 #import "@preview/touying:0.6.1": *
+#import "@preview/tablem:0.3.0": tablem, three-line-table
 
 #let _typst-builtin-repeat = repeat
 
@@ -66,6 +67,82 @@
   ]
 )
 
+// Monash-styled table helpers powered by typst-tablem
+// Usage:
+//   #monash-table[
+//     | *Col A* | *Col B* |
+//     | ------- | ------- |
+//     | a       | b       |
+//   ]
+//
+//   #monash-three-line-table[
+//     | *Name* | *Score* |
+//     | :----: | ------: |
+//     | John   | 5       |
+//     | Wally  | 10      |
+//   ]
+#let monash-table = tablem.with(
+  render: (
+    columns: auto,
+    align: auto,
+    stripe: true,
+    stripe-fill: auto,
+    stroke-color: auto,
+    ..args,
+  ) => {
+    let sc = if stroke-color == auto { rgb("#3c3c3c") } else { stroke-color }
+    let sf = if stripe-fill == auto { rgb("#EAF2F5") } else { stripe-fill }
+    table(
+      columns: columns,
+      stroke: none,
+      align: if align == auto { left } else { align },
+      // default zebra striping; can be overridden by passing fill: ... in args
+      fill: (_, y) => if stripe and calc.odd(y) { sf },
+      // allow user overrides
+      ..args,
+      // subtle outer frame when user passes stroke via args; otherwise no outer border
+    )
+  }
+)
+
+#let monash-three-line-table = tablem.with(
+  render: (
+    columns: auto,
+    align: auto,
+    stroke-color: auto,
+    header-fill: auto,
+    stripe: true,
+    stripe-fill: auto,
+    top-stroke: .8pt,
+    mid-stroke: .5pt,
+    bottom-stroke: .8pt,
+    ..args,
+  ) => {
+    // Brand-aware defaults; users can override via named args
+    let sc = if stroke-color == auto { rgb("#006dae") } else { stroke-color }
+    let hf = if header-fill == auto { rgb("#EAF2F5").lighten(10%) } else { header-fill }
+    let sf = if stripe-fill == auto { rgb("#EAF2F5") } else { stripe-fill }
+
+    table(
+      columns: columns,
+      stroke: none,
+      align: if align == auto { center + horizon } else { align },
+      // Top rule
+      table.hline(y: 0, stroke: top-stroke + sc),
+      // Header separator rule
+      table.hline(y: 1, stroke: mid-stroke + sc),
+      // Default fills (user can override with their own fill in ..args)
+      fill: (x, y) => {
+        if y == 0 { hf } else if stripe and calc.odd(y) { sf }
+      },
+      // Let users override any of the above
+      ..args,
+      // Bottom rule
+      table.hline(stroke: bottom-stroke + sc),
+    )
+  }
+)
+
 #let dewdrop-header(self) = {
   if self.store.navigation == "sidebar" {
     place(
@@ -84,7 +161,7 @@
           text-size: (1em, .9em),
           vspace: (-.2em,),
           indent: (0em, self.store.sidebar.at("indent", default: .5em)),
-          fill: (self.store.sidebar.at("fill", default: _typst-builtin-repeat[.]),),
+          fill: (self.store.sidebar.at("fill", default: _typst-builtin-repeat[.] ),),
           filled: (self.store.sidebar.at("filled", default: false),),
           paged: (self.store.sidebar.at("paged", default: false),),
           short-heading: self.store.sidebar.at("short-heading", default: true),

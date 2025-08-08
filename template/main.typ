@@ -135,6 +135,50 @@ Professional table styling with Monash colors:
 
 #figure(table1, caption: "A Table")
 
+#v(1em)
+
+#figure(
+  monash-three-line-table[
+    | *Name* | *Location* | *Height* | *Score* |
+    | :----: | :--------: | :------: | :-----: |
+    | John   | Second St. | 180 cm   | 5       |
+    | Wally  | Third Av.  | 160 cm   | 10      |
+  ],
+  caption: "Three-line Monash table",
+)
+
+#v(1em)
+
+#figure(
+  monash-table[
+    | *Col A* | *Col B* |
+    | ------- | ------- |
+    | a       | b       |
+    | c       | d       |
+  ],
+  caption: "Striped Monash table",
+)
+
+#v(1em)
+
+#figure(
+  monash-three-line-table(
+    stroke-color: rgb("#006dae"),
+    header-fill: rgb("#EAF2F5"),
+    stripe: true,
+    stripe-fill: rgb("#F4F8FB"),
+    top-stroke: .9pt,
+    mid-stroke: .5pt,
+    bottom-stroke: .9pt,
+  )[
+    | A | B | C |
+    |:-:|:-:|:-:|
+    | x | y | < |
+    | ^ | z | z |
+  ],
+  caption: "Cell merging (<, ^) and customized strokes/fills",
+)
+
 == Code Examples
 
 Code blocks with proper syntax highlighting:
