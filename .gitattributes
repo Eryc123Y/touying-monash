@@ -1,7 +1,2 @@
 # Auto detect text files and perform LF normalization
 * text=auto
-slides/
-.DS_Store/
-# exclude all pdfs except template/main.pdf
-*.pdf linguist-vendored
-!template/main.pdf linguist-generated
