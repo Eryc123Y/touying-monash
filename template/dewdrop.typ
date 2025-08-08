@@ -309,7 +309,7 @@
     config: config,
     align(center + horizon,
       block(
-        width: 70%,
+        width: 90%,
         inset: (y: 1.2em, x: 1.2em),
         radius: 10pt,
         fill: self.colors.neutral-light,
@@ -319,10 +319,15 @@
           context {
             let prev = query(heading.where(level: 1).before(here()))
             let current-loc = if prev.len() > 0 { prev.last().location() } else { none }
+            let count = query(heading.where(level: 1)).len()
+            let base = 1.2em - count * 0.05em
+            let spacing = if base < 0.4em { 0.4em } else if base > 1.4em { 1.4em } else { base }
+
             show outline.entry: it => {
               let is-current = current-loc != none and it.element.location() == current-loc
               let entry-fill = if is-current { self.colors.neutral-darkest } else { self.colors.neutral-darkest.lighten(60%) }
               set text(fill: entry-fill, size: 1.1em, weight: if is-current { "bold" } else { "regular" })
+              set block(above: spacing/2, below: spacing/2)
               it
             }
             outline(title: none, indent: 0.6em, depth: 1, ..args)

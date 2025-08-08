@@ -120,7 +120,7 @@ Here are various content types with enhanced Monash styling:
 
 Professional table styling with Monash colors:
 
-#table(
+#let table1 = table(
   columns: 3,
   stroke: (x, y) => (
     top: if y == 0 { 2pt + rgb("#006dae") } else { 0.5pt + gray },
@@ -132,6 +132,8 @@ Professional table styling with Monash colors:
   [Research], [89%], [92%],  
   [Satisfaction], [4.2/5], [4.5/5]
 )
+
+#figure(table1, caption: "A Table")
 
 == Code Examples
 
