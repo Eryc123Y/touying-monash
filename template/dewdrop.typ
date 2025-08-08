@@ -6,6 +6,9 @@
 
 #let _typst-builtin-repeat = repeat
 
+// Monash brand fonts with fallbacks for better compatibility
+#let monash-font = ("Liberation Sans", "DejaVu Sans", "Noto Sans")
+
 #let dewdrop-header(self) = {
   if self.store.navigation == "sidebar" {
     place(
@@ -127,7 +130,7 @@
   )
   let info = self.info + args.named()
   let body = {
-    set text(fill: self.colors.neutral-darkest, font: "Helvetica Neue")
+    set text(fill: self.colors.neutral-darkest, font: monash-font)
     set align(center + horizon)
     
     // Monash-style title slide with brand colors
@@ -164,13 +167,20 @@
             #set text(fill: self.colors.neutral-darkest, size: 1em)
             #if info.author != none {
               text(weight: "medium", info.author)
-              if info.institution != none or info.date != none {
+              if info.institution != none or extra != none or info.date != none {
                 linebreak()
               }
             }
             #if info.institution != none {
               v(0.3em)
               text(size: 0.9em, weight: "regular", info.institution)
+              if extra != none or info.date != none {
+                linebreak()
+              }
+            }
+            #if extra != none {
+              v(0.3em)
+              text(size: 0.9em, weight: "regular", extra)
               if info.date != none {
                 linebreak()
               }
@@ -181,18 +191,6 @@
             }
           ],
         )
-        
-        // Extra information block
-        if extra != none {
-          v(1em)
-          block(
-            fill: self.colors.secondary,
-            inset: 1em,
-            width: 100%,
-            radius: 0em,
-            text(size: 0.9em, fill: self.colors.neutral-lightest, weight: "regular", extra),
-          )
-        }
       },
     )
   }
@@ -252,7 +250,7 @@
     self: self,
     config: config,
     align(center + horizon, [
-      #set text(fill: self.colors.neutral-lightest, font: "Helvetica Neue")
+      #set text(fill: self.colors.neutral-lightest, font: monash-font)
       #block(
         width: 80%,
         [
@@ -287,7 +285,7 @@
     config-common(freeze-slide-counter: true),
     config-page(fill: self.colors.primary, margin: 2em),
   )
-  set text(fill: self.colors.neutral-lightest, size: 1.8em, font: "Helvetica Neue", weight: "bold")
+  set text(fill: self.colors.neutral-lightest, size: 1.8em, font: monash-font, weight: "bold")
   touying-slide(self: self, config: config, align(horizon + center, body))
 })
 
@@ -313,7 +311,7 @@
       inset: 2em,
       radius: 3pt,
       [
-        #set text(fill: self.colors.neutral-darkest, font: "Helvetica Neue")
+        #set text(fill: self.colors.neutral-darkest, font: monash-font)
         #text(size: 1.2em, weight: "medium", body)
       ]
     )
@@ -332,7 +330,7 @@
     self,
     config-page(fill: self.colors.accent, margin: 2em),
   )
-  set text(fill: self.colors.neutral-lightest, size: 1.6em, font: "Helvetica Neue", weight: "bold")
+  set text(fill: self.colors.neutral-lightest, size: 1.6em, font: monash-font, weight: "bold")
   let content = align(center + horizon, [
     #block(
       width: 90%,
@@ -387,7 +385,7 @@
 ///   - indent (length): The indent of the outline in the sidebar.
 ///   - short-heading (boolean): Whether the outline in the sidebar is short.
 ///
-/// - mini-slides (dictionary): The configuration of the mini-slides. You can set the height, x, display-section, display-subsection, and short-heading of the mini-slides. Default is `(height: 4em, x: 2em, display-section: false, display-subsection: true, linebreaks: true, short-heading: true)`.
+/// - mini-slides (dictionary): The configuration of the mini-slides. You can set the height, x, display-section, display-subsection, and short-heading of the mini-slides. Default is `(height: 4em, x: 2em, display-section: false, display-subsection: true, linebreaks: false, short-heading: true)`.
 ///   - height (length): The height of the mini-slides.
 ///   - x (length): The x position of the mini-slides.
 ///   - display-section (boolean): Whether the slides of sections are displayed in the mini-slides.
@@ -421,7 +419,7 @@
     x: 2em,
     display-section: false,
     display-subsection: true,
-    linebreaks: true,
+    linebreaks: false,  // Changed to false for horizontal layout
     short-heading: true,
   ),
   footer: none,
@@ -439,10 +437,10 @@
     sidebar,
   )
   mini-slides = utils.merge-dicts(
-    (height: 4em, x: 2em, display-section: false, display-subsection: true, linebreaks: true, short-heading: true),
+    (height: 4em, x: 2em, display-section: false, display-subsection: true, linebreaks: false, short-heading: true),
     mini-slides,
   )
-  set text(size: 20pt, font: "Helvetica Neue", fallback: true)
+  set text(size: 20pt, font: monash-font)
   set par(justify: true, leading: 0.65em)
   set heading(numbering: none)
 
@@ -470,19 +468,19 @@
           size: 1.4em, 
           weight: "bold", 
           fill: self.colors.primary,
-          font: "Helvetica Neue"
+          font: monash-font
         )
         show heading.where(level: 2): set text(
           size: 1.2em, 
           weight: "bold", 
           fill: self.colors.secondary,
-          font: "Helvetica Neue"
+          font: monash-font
         )
         show heading.where(level: 3): set text(
           size: 1.1em, 
           weight: "bold", 
           fill: self.colors.neutral-dark,
-          font: "Helvetica Neue"
+          font: monash-font
         )
         
         // Enhanced text styling

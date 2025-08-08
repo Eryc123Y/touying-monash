@@ -99,9 +99,7 @@
 = Advanced Features
 
 == Typography & Styling
-
-#slide[
-  == Enhanced Typography
+=== Enhanced Typography
   
   The template now uses *Helvetica Neue* as per Monash brand guidelines:
   
@@ -111,20 +109,12 @@
   - *Level 3 headings* use Dark Grey
   
   Regular text includes:
-  - **Bold text** in Monash Blue
-  - *Italic text* in Secondary Blue
+  - *Bold text* in Monash Blue
+  - _Italic text_ in Secondary Blue
   - Standard paragraph text in black
-  
-  #v(1em)
-  
-  > This is a quote that demonstrates the clean typography and proper spacing used throughout the template.
-]
+
 
 == Content Examples
-
-#slide[
-  == Content Examples
-  
   Here are various content types with enhanced Monash styling:
   
   #alert[This is an alert message using Monash Blue]
@@ -146,12 +136,9 @@
     radius: 2pt,
     [*Warning:* Important notices can use the Monash Red accent color for emphasis.]
   )
-]
 
 == Data & Tables
-
-#slide[
-  == Data Presentation
+  === Data Presentation
   
   Professional table styling with Monash colors:
   
@@ -167,12 +154,9 @@
     [Research], [89%], [92%],  
     [Satisfaction], [4.2/5], [4.5/5]
   )
-]
 
 == Code Example
 
-#slide[
-  == Code Examples
   
   Code blocks with proper syntax highlighting:
   
@@ -192,14 +176,12 @@
     config-colors(primary: rgb("#006dae"))
   )
   ```
-]
+
 
 = Conclusion
 
 == Summary
 
-#slide[
-  == Template Enhancements Summary
   
   This enhanced Monash template includes:
   
@@ -225,7 +207,7 @@
   #v(1em)
   
   Perfect for academic presentations, research talks, and professional meetings.
-]
+
 
 #focus-slide[
   *Thank You!*
