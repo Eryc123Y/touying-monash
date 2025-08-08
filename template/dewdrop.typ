@@ -302,33 +302,28 @@
     self,
     config-page(
       footer: dewdrop-footer,
-      fill: self.colors.primary,
     ),
   )
   touying-slide(
     self: self,
     config: config,
-    align(center + horizon, [
-      #set text(fill: self.colors.neutral-lightest, font: monash-font)
-      #block(
+    align(center + horizon,
+      block(
         width: 80%,
-        [
+        height: 60%,
+        fill: self.colors.primary,
+        inset: (y: 2em, x: 1.5em),
+        radius: 12pt,
+        align(center, [
           #text(
-            size: 2em,
+            size: 1.2em,
             weight: "bold",
-            utils.call-or-display(self, title),
+            fill: self.colors.neutral-lightest,
+            utils.display-current-heading(depth: self.slide-level, style: content => content),
           )
-          #v(1em)
-          #line(length: 100%, stroke: 2pt + self.colors.neutral-lightest)
-          #v(1em)
-          #text(
-            size: 1.1em,
-            weight: "regular",
-            body
-          )
-        ]
+        ])
       )
-    ])
+    )
   )
 })
 
