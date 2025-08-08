@@ -1,4 +1,4 @@
-#import "/template/dewdrop.typ": *
+#import "../../template/dewdrop.typ": *
 #import "@preview/numbly:0.1.0": numbly
 #import "@preview/theorion:0.4.0": *
 #import "@preview/pinit:0.2.2": *
@@ -19,7 +19,7 @@
 #show: dewdrop-theme.with(
   aspect-ratio: "16-9",
   logo: image(
-    "/template/Monash_University_logo_page.svg",
+    "../../template/Monash_University_logo_page.svg",
     height: 2em,
     ),
   footer: none,  // Footer removed
@@ -41,12 +41,20 @@
 
 = Flynn's taxonomy
 
+// Summary of classes by instruction and data streams
+
+
 == SISD (Single Instruction Single Data)
 #definition(title: "SISD")[
   A single processor executes a single instruction stream to operate on data stored in a single memory. This is the traditional *von Neumann architecture*.
 ]
 #example[
-  - 
+  - Early mainframes and minicomputers: IBM System/360, PDP-11
+  - Early microprocessors and microcontrollers: Intel 8086, 8051
+  
+  *Real-life applications*
+  - Embedded control loops and device drivers
+  - Sequential algorithms with strict data dependencies (e.g., single-thread DP)
 ]
 
 
@@ -74,16 +82,91 @@
 #definition(title: "MISD")[
   Multiple instruction streams operate on a single data stream. This architecture is rare but used in fault-tolerant systems and parallel processing of single data through multiple stages.
 ]
+#example[
+  *Historical/real systems*
+  - N-modular redundancy (TMR/NMR) in avionics and spacecraft (e.g., fly-by-wire, Space Shuttle): multiple diverse implementations consume the same sensor data and vote
+  - Diverse-program redundant computing: different algorithms validate the same input stream
+  
+  *Real-life applications*
+  - Safety monitoring and voting on sensor data (fault tolerance)
+  - Cryptographic verification using multiple independent implementations
+  - Signal validation/health monitoring pipelines (same input, multiple processing chains)
+]
 === Diagram
+```
+Input data ──► [ Algo A ] ──►
+           └─► [ Algo B ] ──► Voting / Comparison ──► Output
+           └─► [ Algo C ] ──►
+```
 
 == MIMD (Multiple Instruction Multiple Data)
 #definition(title: "MIMD")[
   Multiple instruction streams operate on multiple data streams independently. This is the most common parallel architecture used in modern multi-core processors and distributed systems.
 ]
-=== Diagram
+#example[
+
+  - Symmetric multiprocessors and multi-core CPUs: Intel Core/Atom, AMD EPYC, IBM POWER
+  - Shared-memory many-core: Sun/Oracle Niagara, Xeon Phi (MIC)
+  - Clusters and supercomputers: Beowulf clusters, IBM Blue Gene, Cray systems (TOP500)
+  - Cloud/distributed systems: Kubernetes microservices, Hadoop/Spark
+]
+*Real-life applications*
+- Web services and microservices at scale
+- Scientific/HPC workloads (CFD, climate, molecular dynamics)
+- Databases and high-throughput transaction processing
+
+== Summary
+This table summarizes the four classes of Flynn's taxonomy, highlighting the number of instruction and data streams for each type.
+#let summary =monash-three-line-table[
+  | *Type* | *Instruction streams* | *Data streams* |
+  | :----: | :-------------------: | :------------: |
+  | SISD   | 1                     | 1              |
+  | SIMD   | 1                     | Many           |
+  | MISD   | Many                  | 1              |
+  | MIMD   | Many                  | Many           |
+]
+
+#figure(summary, caption: "Summary of Flynn's taxonomy")
+
+Nowadays, the most common architecture is MIMD. SIMD is also widely used, especially in applications that can benefit from vectorization, such as graphics processing and machine learning.
 
 
 = Processes, Threads, and IPC
+
+== Process Composition (6 Attributes)
+
+#let process-attrs = monash-three-line-table[
+| *Attribute* | *Purpose* |
+| :----: | :-------: |
+| PID | Unique identifier |
+| PC | Next instruction address |
+| Stack | Function calls & local data |
+| Heap | Dynamic memory |
+| State | Execution status |
+| Registers | Current CPU state |
+]
+
+#figure(process-attrs, caption: "Essential process attributes")
+
+== Thread vs Process Resources
+
+*Resources shared between threads (NOT processes):*
+- Memory space (same virtual address space)
+- File descriptors (shared I/O streams)
+
+== IPC Mechanisms
+
+#let ipc-table = monash-table[
+| *Same Host* | *Network* |
+| :---------: | :-------: |
+| Pipes | Sockets |
+| Shared Memory | |
+| Message Queues | |
+]
+
+#figure(ipc-table, caption: "IPC mechanisms")
+
+*Socket performance: Latency vs Throughput*
 
 = Shared Memory Communication
 == Code Snippet: C - Shared Memory Communication
@@ -112,11 +195,41 @@ printf("Thread 2 returns: %d\n",iret2);
 return;
 }
 ```
-=== What are the Possible Outcomes?
-#lorem(100)
+=== Thread Outcomes & Reasoning
 
-=== Reason for the Possible Outcomes
-#lorem(100)
+*Possible outcomes:*
+- Thread 1 then Thread 2
+- Thread 2 then Thread 1  
+- Interleaved execution
+
+*Why?* OS scheduling is non-deterministic:
+- No synchronization between threads
+- Race condition for CPU/stdout
+- Missing `pthread_join()` calls
 = Pipelining
 
-= Superscalar processing
+== Pipelining Performance
+
+*Non-pipelined:* 1 instruction per 4ns
+*Pipelined:* 1 instruction per 1ns (4x speedup)
+
+*Pipeline stalls caused by:*
+- Data hazards (RAW dependencies)
+- Control hazards (branch misprediction)
+
+= Superscalar Processing
+
+== Key Concepts
+
+*8-way superscalar CPU:*
+- 2 Integer EUs, 4 FP EUs, 2 Address EUs
+- Multiple instructions per cycle
+
+*Anti-dependency (WAR hazard):*
+```cpp
+result = a + b;  // Read a, b
+a = c + 5;       // Write a (WAR)
+result = result + a; // Read new a
+```
+
+*Solved by register renaming*

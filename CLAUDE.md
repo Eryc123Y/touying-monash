@@ -6,6 +6,8 @@ Use this prompt to generate, extend, or refactor Typst slide decks built on the 
 
 You are assisting with a Typst presentation using the Monash University Touying theme.
 
+use * * for bold text, _ _ for italics, and ` ` for code inline snippets.
+
 Produce working Typst code that:
 - Imports and uses this template’s theme and helpers
 - Respects Monash brand styling (colors, typography, layout)
@@ -127,23 +129,12 @@ Reference for table parsing and alignment: `typst-tablem` [GitHub repository](ht
 
 #### Boxes and Alerts
 ```typst
-#note[Key takeaway: keep sections short and focused.]
-#info[Dataset includes 15,234 students and 2 semesters.]
-#warning[Privacy constraints apply to raw data access.]
-#tip[Use `outline-slide()` to help orient the audience between sections.]
-```
+#note-box[
+  Put contents here
+]
+#tip-box[Each process has its own separate memory space and file descriptor table.]
 
----
-
-#### Math & Code
-```typst
-$\text{AUC} = \int_0^1 TPR(FPR)\, d(FPR)$
-```
-```typst
-```python
-from pathlib import Path
-print("Hello Monash")
-```
+#warning-box[Key reasons for non-deterministic behavior:]
 ```
 
 ---
