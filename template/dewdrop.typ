@@ -1,5 +1,6 @@
 // This theme is inspired by https://github.com/zbowang/BeamerTheme
 // The typst version was written by https://github.com/OrangeX4
+// Enhanced with Monash University brand guidelines and color scheme
 
 #import "@preview/touying:0.6.1": *
 
@@ -126,38 +127,71 @@
   )
   let info = self.info + args.named()
   let body = {
-    set text(fill: self.colors.neutral-darkest)
+    set text(fill: self.colors.neutral-darkest, font: "Helvetica Neue")
     set align(center + horizon)
+    
+    // Monash-style title slide with brand colors
     block(
       width: 100%,
-      inset: 3em,
+      inset: 2em,
       {
+        // Main title block with Monash branding
+        block(
+          fill: self.colors.primary,
+          inset: 2em,
+          width: 100%,
+          radius: 0em, // Clean, modern look
+          [
+            #set text(fill: self.colors.neutral-lightest, weight: "bold")
+            #text(size: 1.5em, info.title)
+            #if info.subtitle != none {
+              linebreak()
+              v(0.5em)
+              text(size: 1.1em, weight: "regular", info.subtitle)
+            }
+          ],
+        )
+        
+        v(1.5em)
+        
+        // Author and institution block
         block(
           fill: self.colors.neutral-light,
-          inset: 1em,
+          inset: 1.5em,
           width: 100%,
-          radius: 0.2em,
-          text(size: 1.3em, fill: self.colors.primary, text(weight: "medium", info.title)) + (
-            if info.subtitle != none {
-              linebreak()
-              text(size: 0.9em, fill: self.colors.primary, info.subtitle)
+          radius: 0em,
+          [
+            #set text(fill: self.colors.neutral-darkest, size: 1em)
+            #if info.author != none {
+              text(weight: "medium", info.author)
+              if info.institution != none or info.date != none {
+                linebreak()
+              }
             }
-          ),
+            #if info.institution != none {
+              v(0.3em)
+              text(size: 0.9em, weight: "regular", info.institution)
+              if info.date != none {
+                linebreak()
+              }
+            }
+            #if info.date != none {
+              v(0.3em)
+              text(size: 0.9em, fill: self.colors.neutral-dark, utils.display-info-date(self))
+            }
+          ],
         )
-        set text(size: .8em)
-        if info.author != none {
-          block(spacing: 1em, info.author)
-        }
-        v(1em)
-        if info.date != none {
-          block(spacing: 1em, utils.display-info-date(self))
-        }
-        set text(size: .8em)
-        if info.institution != none {
-          block(spacing: 1em, info.institution)
-        }
+        
+        // Extra information block
         if extra != none {
-          block(spacing: 1em, extra)
+          v(1em)
+          block(
+            fill: self.colors.secondary,
+            inset: 1em,
+            width: 100%,
+            radius: 0em,
+            text(size: 0.9em, fill: self.colors.neutral-lightest, weight: "regular", extra),
+          )
         }
       },
     )
@@ -197,7 +231,7 @@
 })
 
 
-/// New section slide for the presentation. You can update it by updating the `new-section-slide-fn` argument for `config-common` function.
+/// New section slide for the presentation with enhanced Monash styling. You can update it by updating the `new-section-slide-fn` argument for `config-common` function.
 ///
 /// Example: `config-common(new-section-slide-fn: new-section-slide.with(numbered: false))`
 /// 
@@ -211,34 +245,38 @@
     self,
     config-page(
       footer: dewdrop-footer,
+      fill: self.colors.primary,
     ),
   )
   touying-slide(
     self: self,
     config: config,
-    components.adaptive-columns(
-      start: text(
-        1.2em,
-        fill: self.colors.primary,
-        weight: "bold",
-        utils.call-or-display(self, title),
-      ),
-      text(
-        fill: self.colors.neutral-darkest,
-        components.progressive-outline(
-          alpha: self.store.alpha,
-          title: none,
-          indent: 1em,
-          depth: self.slide-level,
-          ..args,
-        ),
-      ),
-    ),
+    align(center + horizon, [
+      #set text(fill: self.colors.neutral-lightest, font: "Helvetica Neue")
+      #block(
+        width: 80%,
+        [
+          #text(
+            size: 2em,
+            weight: "bold",
+            utils.call-or-display(self, title),
+          )
+          #v(1em)
+          #line(length: 100%, stroke: 2pt + self.colors.neutral-lightest)
+          #v(1em)
+          #text(
+            size: 1.1em,
+            weight: "regular",
+            body
+          )
+        ]
+      )
+    ])
   )
 })
 
 
-/// Focus on some content.
+/// Focus on some content with Monash branding.
 ///
 /// Example: `#focus-slide[Wake up!]`
 /// 
@@ -249,28 +287,92 @@
     config-common(freeze-slide-counter: true),
     config-page(fill: self.colors.primary, margin: 2em),
   )
-  set text(fill: self.colors.neutral-lightest, size: 1.5em)
+  set text(fill: self.colors.neutral-lightest, size: 1.8em, font: "Helvetica Neue", weight: "bold")
   touying-slide(self: self, config: config, align(horizon + center, body))
 })
 
 
-/// Touying dewdrop theme.
+/// Create a slide with Monash-branded info box
+/// 
+/// Example: `#info-slide[This is important information]`
+/// 
+/// - config (dictionary): The configuration of the slide.
+#let info-slide(config: (:), body) = touying-slide-wrapper(self => {
+  self = utils.merge-dicts(
+    self,
+    config-page(
+      header: dewdrop-header,
+      footer: dewdrop-footer,
+    ),
+  )
+  let content = align(center + horizon, [
+    #block(
+      width: 85%,
+      fill: self.colors.secondary.lighten(95%),
+      stroke: (left: 4pt + self.colors.secondary, rest: 1pt + self.colors.secondary.lighten(70%)),
+      inset: 2em,
+      radius: 3pt,
+      [
+        #set text(fill: self.colors.neutral-darkest, font: "Helvetica Neue")
+        #text(size: 1.2em, weight: "medium", body)
+      ]
+    )
+  ])
+  touying-slide(self: self, config: config, content)
+})
+
+
+/// Create a slide for highlighting key points with Monash accent color
+/// 
+/// Example: `#highlight-slide[Key Takeaway]`
+/// 
+/// - config (dictionary): The configuration of the slide.
+#let highlight-slide(config: (:), body) = touying-slide-wrapper(self => {
+  self = utils.merge-dicts(
+    self,
+    config-page(fill: self.colors.accent, margin: 2em),
+  )
+  set text(fill: self.colors.neutral-lightest, size: 1.6em, font: "Helvetica Neue", weight: "bold")
+  let content = align(center + horizon, [
+    #block(
+      width: 90%,
+      inset: 1.5em,
+      stroke: 3pt + self.colors.neutral-lightest,
+      radius: 5pt,
+      body
+    )
+  ])
+  touying-slide(self: self, config: config, content)
+})
+
+
+/// Touying dewdrop theme enhanced with Monash University branding.
+///
+/// This theme incorporates Monash University's official color palette, typography (Helvetica Neue),
+/// and design principles for professional presentations.
 ///
 /// Example:
 ///
 /// ```typst
-/// #show: dewdrop-theme.with(aspect-ratio: "16-9", config-colors(primary: blue))`
+/// #show: dewdrop-theme.with(
+///   aspect-ratio: "16-9", 
+///   config-colors(primary: rgb("#006dae")) // Monash Blue
+/// )
 /// ```
 ///
-/// The default colors:
+/// The official Monash colors included:
 ///
 /// ```typ
 /// config-colors(
-///   neutral-darkest: rgb("#000000"),
-///   neutral-dark: rgb("#202020"),
-///   neutral-light: rgb("#f3f3f3"),
-///   neutral-lightest: rgb("#ffffff"),
-///   primary: rgb("#0c4842"),
+///   neutral-darkest: rgb("#000000"),      // Monash Black
+///   neutral-dark: rgb("#3c3c3c"),         // Monash Dark Grey  
+///   neutral-light: rgb("#f8f9fa"),        // Light Grey
+///   neutral-lightest: rgb("#ffffff"),     // Monash White
+///   primary: rgb("#006dae"),              // Monash Blue
+///   secondary: rgb("#00739d"),            // Secondary Blue
+///   accent: rgb("#df0021"),               // Monash Red
+///   purple: rgb("#6f64a9"),               // Monash Purple
+///   fuchsia: rgb("#c90095"),              // Monash Fuchsia
 /// )
 /// ```
 ///
@@ -297,7 +399,7 @@
 ///
 /// - footer-right (content, function): The right part of the footer. Default is `context utils.slide-counter.display() + " / " + utils.last-slide-number`.
 ///
-/// - primary (color): The primary color of the slides. Default is `rgb("#0c4842")`.
+/// - primary (color): The primary color of the slides. Default is `rgb("#006DAE")`.
 ///
 /// - alpha (fraction, float): The alpha of transparency. Default is `60%`.
 ///
@@ -324,7 +426,7 @@
   ),
   footer: none,
   footer-right: context utils.slide-counter.display() + " / " + utils.last-slide-number,
-  primary: rgb("#0c4842"),
+  primary: rgb("#006dae"),
   alpha: 60%,
   subslide-preamble: self => block(
     text(1.2em, weight: "bold", fill: self.colors.primary, utils.display-current-heading(depth: self.slide-level, style: auto)),
@@ -340,8 +442,9 @@
     (height: 4em, x: 2em, display-section: false, display-subsection: true, linebreaks: true, short-heading: true),
     mini-slides,
   )
-  set text(size: 20pt)
-  set par(justify: true)
+  set text(size: 20pt, font: "Helvetica Neue", fallback: true)
+  set par(justify: true, leading: 0.65em)
+  set heading(numbering: none)
 
   show: touying-slides.with(
     config-page(
@@ -361,19 +464,64 @@
       new-section-slide-fn: new-section-slide,
     ),
     config-methods(
-        init: (self: none, body) => {
-        show heading: set text(self.colors.primary)
-
+      init: (self: none, body) => {
+        // Monash-style heading formatting
+        show heading.where(level: 1): set text(
+          size: 1.4em, 
+          weight: "bold", 
+          fill: self.colors.primary,
+          font: "Helvetica Neue"
+        )
+        show heading.where(level: 2): set text(
+          size: 1.2em, 
+          weight: "bold", 
+          fill: self.colors.secondary,
+          font: "Helvetica Neue"
+        )
+        show heading.where(level: 3): set text(
+          size: 1.1em, 
+          weight: "bold", 
+          fill: self.colors.neutral-dark,
+          font: "Helvetica Neue"
+        )
+        
+        // Enhanced text styling
+        show strong: set text(weight: "bold", fill: self.colors.primary)
+        show emph: set text(style: "italic", fill: self.colors.secondary)
+        
         body
       },
       alert: utils.alert-with-primary-color,
+      // Add Monash-style info boxes
+      info-box: (self: none, body) => {
+        block(
+          fill: self.colors.secondary.lighten(90%),
+          stroke: (left: 3pt + self.colors.secondary),
+          inset: 1em,
+          radius: 2pt,
+          body
+        )
+      },
+      warning-box: (self: none, body) => {
+        block(
+          fill: self.colors.accent.lighten(90%),
+          stroke: (left: 3pt + self.colors.accent),
+          inset: 1em,
+          radius: 2pt,
+          body
+        )
+      },
     ),
     config-colors(
-      neutral-darkest: rgb("#000000"),
-      neutral-dark: rgb("#202020"),
-      neutral-light: rgb("#f3f3f3"),
-      neutral-lightest: rgb("#ffffff"),
-      primary: primary,
+      neutral-darkest: rgb("#000000"),      // Monash Black
+      neutral-dark: rgb("#3c3c3c"),         // Monash Dark Grey  
+      neutral-light: rgb("#f8f9fa"),        // Light Grey for backgrounds
+      neutral-lightest: rgb("#ffffff"),     // Monash White
+      primary: rgb("#006dae"),              // Monash Blue (primary)
+      secondary: rgb("#00739d"),            // Monash Secondary Blue
+      accent: rgb("#df0021"),               // Monash Red for highlights
+      purple: rgb("#6f64a9"),               // Monash Purple
+      fuchsia: rgb("#c90095"),              // Monash Fuchsia
     ),
     // save the variables for later use
     config-store(
