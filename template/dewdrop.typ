@@ -179,6 +179,12 @@
         fill: rgb("#006dae").lighten(90%),
       )
     )
+    place(
+      right + bottom,
+      dx: -0.5em,
+      dy: 0.5em,
+      self.store.logo
+    )
     components.mini-slides(
       self: self,
       fill: self.colors.primary,
@@ -192,15 +198,13 @@
 }
 
 #let dewdrop-footer(self) = {
-  // Add logo in bottom-right corner
-  if self.store.at("logo", default: none) != none {
-    place(
-      right + bottom,
-      dx: -0.5em,
-      dy: -0.5em,
-      self.store.logo
-    )
-  }
+  set align(bottom)
+  set text(size: 0.8em)
+  show: pad.with(.5em)
+  components.left-and-right(
+    text(fill: self.colors.neutral-darkest.lighten(40%), utils.call-or-display(self, self.store.footer)),
+    text(fill: self.colors.neutral-darkest.lighten(20%), utils.call-or-display(self, self.store.footer-right)),
+  )
 }
 
 /// Default slide function for the presentation.
@@ -525,7 +529,6 @@
   )
   set text(size: 20pt, font: monash-font)
   set par(justify: true, leading: 0.65em)
-  set heading(numbering: none)
 
   show: touying-slides.with(
     config-page(
