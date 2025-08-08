@@ -93,20 +93,19 @@ The logo will appear on all slides automatically.
 The template provides easy-to-use box environments for different types of content:
 
 ```typst
-#note[General notes and information using Monash Blue]
+#note[General notes and important information]
 
-#info[Additional details using Secondary Blue]
+#info[Additional context and details]
 
-#warning[Important warnings using Monash Red]
+#warning[Critical warnings and alerts]
 
-#tip[Helpful tips using Monash Purple]
-
-#success[Success messages using green]
+#tip[Helpful suggestions and best practices]
 ```
 
-Each box has:
-- **Consistent styling** with left border and light background
-- **Monash brand colors** for different purposes
+Each box features:
+- **Clear labels** with icons (📝 NOTE, ℹ️ INFO, ⚠️ WARNING, 💡 TIP)
+- **Distinct colors** - Note (Monash Blue), Info (Cyan), Warning (Red), Tip (Purple)
+- **Professional styling** with left border and colored background
 - **Easy syntax** - just use `#boxtype[content]`
 - **Responsive design** that works with the slide layout
 

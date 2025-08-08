@@ -37,7 +37,7 @@ This presentation template has been enhanced with:
 
 #v(1em)
 
-#note[*Note:* This template follows Monash University's official brand guidelines for consistent professional appearance.]
+#note[This template follows Monash University's official brand guidelines for consistent professional appearance.]
 
 == Color Palette
 
@@ -88,7 +88,6 @@ The template provides easy-to-use box environments:
 #info[Additional information]
 #warning[Important warnings]
 #tip[Helpful tips]
-#success[Success messages]
 ```
 
 == Content Examples
@@ -99,15 +98,13 @@ Here are various content types with enhanced Monash styling:
 
 *Box environments for different purposes:*
 
-#note[This is a note box using Monash Blue for general information and tips.]
+#note[Use this for general notes and important information that users should remember.]
 
-#info[This is an info box using Secondary Blue for additional details.]
+#info[This provides additional context and details about the current topic being discussed.]
 
-#warning[This is a warning box using Monash Red for important warnings.]
+#warning[Critical information that requires immediate attention or could cause issues if ignored.]
 
-#tip[This is a tip box using Monash Purple for helpful suggestions.]
-
-#success[This is a success box using green for positive feedback or completion messages.]
+#tip[Helpful suggestions and best practices to improve user experience and results.]
 
 *Lists work beautifully:*
 1. Numbered lists use consistent spacing
