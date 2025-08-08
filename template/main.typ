@@ -1,11 +1,9 @@
-#import "dewdrop.typ": *
-
-#import "@preview/numbly:0.1.0": numbly
+#import "/template/dewdrop.typ": *
 
 #show: dewdrop-theme.with(
   aspect-ratio: "16-9",
   logo: image(
-    "Monash_University_logo_page.svg",
+    "/template/Monash_University_logo_page.svg",
     height: 2em,
     ),
   footer: none,  // Footer removed
