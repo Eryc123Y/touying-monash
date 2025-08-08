@@ -309,19 +309,25 @@
     config: config,
     align(center + horizon,
       block(
-        width: 80%,
-        height: 60%,
-        fill: self.colors.primary,
-        inset: (y: 2em, x: 1.5em),
-        radius: 12pt,
-        align(center, [
-          #text(
-            size: 1.2em,
-            weight: "bold",
-            fill: self.colors.neutral-lightest,
-            utils.display-current-heading(depth: self.slide-level, style: content => content),
-          )
-        ])
+        width: 70%,
+        inset: (y: 1.2em, x: 1.2em),
+        radius: 10pt,
+        fill: self.colors.neutral-light,
+        {
+          set align(left)
+          // Only level-1 headings; dim non-current sections
+          context {
+            let prev = query(heading.where(level: 1).before(here()))
+            let current-loc = if prev.len() > 0 { prev.last().location() } else { none }
+            show outline.entry: it => {
+              let is-current = current-loc != none and it.element.location() == current-loc
+              let entry-fill = if is-current { self.colors.neutral-darkest } else { self.colors.neutral-darkest.lighten(60%) }
+              set text(fill: entry-fill, size: 1.1em, weight: if is-current { "bold" } else { "regular" })
+              it
+            }
+            outline(title: none, indent: 0.6em, depth: 1, ..args)
+          }
+        },
       )
     )
   )
