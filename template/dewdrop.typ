@@ -169,6 +169,16 @@
       },
     )
   } else if self.store.navigation == "mini-slides" {
+    // Add light blue background for progress indicator area
+    place(
+      top + left,
+      dx: -self.store.mini-slides.x,
+      block(
+        width: 100% + 2*self.store.mini-slides.x,
+        height: self.store.mini-slides.height * 0.5,
+        fill: rgb("#006dae").lighten(90%),
+      )
+    )
     components.mini-slides(
       self: self,
       fill: self.colors.primary,
