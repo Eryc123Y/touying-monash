@@ -182,7 +182,7 @@
     place(
       right + bottom,
       dx: -0.5em,
-      dy: 0.5em,
+      dy: 0em,
       self.store.logo
     )
     components.mini-slides(
