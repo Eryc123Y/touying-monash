@@ -10,63 +10,6 @@
 // Monash brand fonts with fallbacks for better compatibility
 #let monash-font = ("Liberation Sans", "DejaVu Sans", "Noto Sans")
 
-// Monash-branded box environments with labels
-#let note(body) = block(
-  fill: rgb("#006dae").lighten(90%),
-  stroke: (left: 4pt + rgb("#006dae")),
-  inset: (top: 0.8em, bottom: 0.8em, left: 1em, right: 1em),
-  radius: 3pt,
-  width: 100%,
-  [
-    #text(size: 0.9em, weight: "bold", fill: rgb("#006dae"))[📝 NOTE] 
-    #v(0.3em)
-    #set text(fill: rgb("#000000"))
-    #body
-  ]
-)
-
-#let info(body) = block(
-  fill: rgb("#17a2b8").lighten(90%),
-  stroke: (left: 4pt + rgb("#17a2b8")),
-  inset: (top: 0.8em, bottom: 0.8em, left: 1em, right: 1em),
-  radius: 3pt,
-  width: 100%,
-  [
-    #text(size: 0.9em, weight: "bold", fill: rgb("#17a2b8"))[ℹ️ INFO] 
-    #v(0.3em)
-    #set text(fill: rgb("#000000"))
-    #body
-  ]
-)
-
-#let warning(body) = block(
-  fill: rgb("#df0021").lighten(90%),
-  stroke: (left: 4pt + rgb("#df0021")),
-  inset: (top: 0.8em, bottom: 0.8em, left: 1em, right: 1em),
-  radius: 3pt,
-  width: 100%,
-  [
-    #text(size: 0.9em, weight: "bold", fill: rgb("#df0021"))[⚠️ WARNING] 
-    #v(0.3em)
-    #set text(fill: rgb("#000000"))
-    #body
-  ]
-)
-
-#let tip(body) = block(
-  fill: rgb("#6f64a9").lighten(90%),
-  stroke: (left: 4pt + rgb("#6f64a9")),
-  inset: (top: 0.8em, bottom: 0.8em, left: 1em, right: 1em),
-  radius: 3pt,
-  width: 100%,
-  [
-    #text(size: 0.9em, weight: "bold", fill: rgb("#6f64a9"))[💡 TIP] 
-    #v(0.3em)
-    #set text(fill: rgb("#000000"))
-    #body
-  ]
-)
-
 // Monash-styled table helpers powered by typst-tablem
 // Usage:
 //   #monash-table[
@@ -198,12 +141,49 @@
 }
 
 #let dewdrop-footer(self) = {
+  // Monash-styled tri-band footer bar similar to university theme
   set align(bottom)
-  set text(size: 0.8em)
-  show: pad.with(.5em)
-  components.left-and-right(
-    text(fill: self.colors.neutral-darkest.lighten(40%), utils.call-or-display(self, self.store.footer)),
-    text(fill: self.colors.neutral-darkest.lighten(20%), utils.call-or-display(self, self.store.footer-right)),
+  set text(size: 0.55em)
+  show: block.with(width: 100%)
+
+  // Resolve contents with sensible defaults
+  let left-content = if self.store.footer != none {
+    utils.call-or-display(self, self.store.footer)
+  } else if self.info.author != none {
+    self.info.author
+  } else {
+    none
+  }
+  let center-content = {
+    if "short-title" in self.info and self.info.short-title != auto and self.info.short-title != none {
+      self.info.short-title
+    } else {
+      self.info.title
+    }
+  }
+  let right-content = utils.call-or-display(self, self.store.footer-right)
+
+  // Helper: colored cell with centered white text (fill full track)
+  let cell = (bg, content) => {
+    if content == none { box() } else {
+      block(
+        width: 100%,
+        height: 100%,
+        fill: bg,
+        inset: (x: .6em, y: .25em),
+        align(center + horizon, text(fill: self.colors.neutral-lightest, content)),
+      )
+    }
+  }
+
+  grid(
+    columns: (25%, 1fr, 25%),
+    rows: 1.6em,
+    column-gutter: 0pt,
+    row-gutter: 0pt,
+    cell(self.colors.primary, left-content),
+    cell(self.colors.secondary, center-content),
+    cell(self.colors.neutral-dark, right-content),
   )
 }
 
