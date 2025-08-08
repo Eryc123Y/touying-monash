@@ -9,6 +9,67 @@
 // Monash brand fonts with fallbacks for better compatibility
 #let monash-font = ("Liberation Sans", "DejaVu Sans", "Noto Sans")
 
+// Monash-branded box environments
+#let note(body) = block(
+  fill: rgb("#006dae").lighten(95%),
+  stroke: (left: 3pt + rgb("#006dae")),
+  inset: 1em,
+  radius: 2pt,
+  width: 100%,
+  [
+    #set text(fill: rgb("#000000"))
+    #body
+  ]
+)
+
+#let info(body) = block(
+  fill: rgb("#00739d").lighten(95%),
+  stroke: (left: 3pt + rgb("#00739d")),
+  inset: 1em,
+  radius: 2pt,
+  width: 100%,
+  [
+    #set text(fill: rgb("#000000"))
+    #body
+  ]
+)
+
+#let warning(body) = block(
+  fill: rgb("#df0021").lighten(95%),
+  stroke: (left: 3pt + rgb("#df0021")),
+  inset: 1em,
+  radius: 2pt,
+  width: 100%,
+  [
+    #set text(fill: rgb("#000000"))
+    #body
+  ]
+)
+
+#let tip(body) = block(
+  fill: rgb("#6f64a9").lighten(95%),
+  stroke: (left: 3pt + rgb("#6f64a9")),
+  inset: 1em,
+  radius: 2pt,
+  width: 100%,
+  [
+    #set text(fill: rgb("#000000"))
+    #body
+  ]
+)
+
+#let success(body) = block(
+  fill: rgb("#28a745").lighten(95%),
+  stroke: (left: 3pt + rgb("#28a745")),
+  inset: 1em,
+  radius: 2pt,
+  width: 100%,
+  [
+    #set text(fill: rgb("#000000"))
+    #body
+  ]
+)
+
 #let dewdrop-header(self) = {
   if self.store.navigation == "sidebar" {
     place(

@@ -38,6 +38,7 @@ An enhanced version of the Touying Dewdrop theme customized with Monash Universi
 - **Accessible color combinations** meeting WCAG guidelines
 - **Clean footer** - no distracting page numbers
 - **Logo support** - add SVG logo in top-right corner
+- **Box environments** - easy-to-use colored boxes for notes, warnings, tips
 
 ## Usage
 
@@ -86,6 +87,28 @@ To add a logo in the top-right corner:
 ```
 
 The logo will appear on all slides automatically.
+
+## Box Environments
+
+The template provides easy-to-use box environments for different types of content:
+
+```typst
+#note[General notes and information using Monash Blue]
+
+#info[Additional details using Secondary Blue]
+
+#warning[Important warnings using Monash Red]
+
+#tip[Helpful tips using Monash Purple]
+
+#success[Success messages using green]
+```
+
+Each box has:
+- **Consistent styling** with left border and light background
+- **Monash brand colors** for different purposes
+- **Easy syntax** - just use `#boxtype[content]`
+- **Responsive design** that works with the slide layout
 
 ## Typography Hierarchy
 

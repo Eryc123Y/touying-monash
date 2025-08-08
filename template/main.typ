@@ -37,13 +37,7 @@ This presentation template has been enhanced with:
 
 #v(1em)
 
-#block(
-  fill: rgb("#006dae").lighten(95%),
-  stroke: (left: 3pt + rgb("#006dae")),
-  inset: 1em,
-  radius: 2pt,
-  [*Note:* This template follows Monash University's official brand guidelines for consistent professional appearance.]
-)
+#note[*Note:* This template follows Monash University's official brand guidelines for consistent professional appearance.]
 
 == Color Palette
 
@@ -85,11 +79,35 @@ Regular text includes:
 - _Italic text_ in Secondary Blue
 - Standard paragraph text in black
 
+=== Box Environments
+
+The template provides easy-to-use box environments:
+
+```typst
+#note[Your note content here]
+#info[Additional information]
+#warning[Important warnings]
+#tip[Helpful tips]
+#success[Success messages]
+```
+
 == Content Examples
 
 Here are various content types with enhanced Monash styling:
 
 #alert[This is an alert message using Monash Blue]
+
+*Box environments for different purposes:*
+
+#note[This is a note box using Monash Blue for general information and tips.]
+
+#info[This is an info box using Secondary Blue for additional details.]
+
+#warning[This is a warning box using Monash Red for important warnings.]
+
+#tip[This is a tip box using Monash Purple for helpful suggestions.]
+
+#success[This is a success box using green for positive feedback or completion messages.]
 
 *Lists work beautifully:*
 1. Numbered lists use consistent spacing
