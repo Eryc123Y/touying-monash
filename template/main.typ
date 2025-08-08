@@ -4,8 +4,9 @@
 
 #show: dewdrop-theme.with(
   aspect-ratio: "16-9",
-  footer: self => self.info.institution,
+  footer: none,  // Footer removed
   navigation: "mini-slides",
+  // logo: image("your-logo.svg", height: 2em),  // Uncomment and add your SVG logo path here
   config-info(
     title: [Monash University Presentation Template],
     subtitle: [Enhanced with Official Brand Guidelines],
@@ -15,16 +16,14 @@
   ),
 )
 
-#title-slide(extra: [Department of Your Faculty])
+#title-slide()
 
 #outline-slide()
 
 = Introduction
 
 == Welcome to Monash
-
-#slide[
-  == Welcome to Monash University
+=== Welcome to Monash University S
 
   This presentation template has been enhanced with:
   
@@ -42,7 +41,6 @@
     radius: 2pt,
     [*Note:* This template follows Monash University's official brand guidelines for consistent professional appearance.]
   )
-]
 
 == Color Palette
 
@@ -70,30 +68,6 @@
       - Light Grey: \#F8F9FA
     ]
   )
-]
-
-= Special Slide Types
-
-== Information Slide
-
-#info-slide[
-  This is an *information slide* that uses Monash's secondary blue color for highlighting important information in a professional manner.
-]
-
-== Focus Slide  
-
-#focus-slide[
-  *Key Message*
-  
-  Focus slides use Monash Blue background for maximum impact
-]
-
-== Highlight Slide
-
-#highlight-slide[
-  *Important Announcement*
-  
-  This slide type uses Monash Red for urgent or critical information
 ]
 
 = Advanced Features
@@ -128,17 +102,9 @@
   - Enhanced readability
   - Professional appearance
   - Consistent with brand guidelines
-  
-  #block(
-    fill: rgb("#df0021").lighten(90%),
-    stroke: (left: 3pt + rgb("#df0021")),
-    inset: 1em,
-    radius: 2pt,
-    [*Warning:* Important notices can use the Monash Red accent color for emphasis.]
-  )
 
 == Data & Tables
-  === Data Presentation
+=== Data Presentation
   
   Professional table styling with Monash colors:
   
@@ -182,6 +148,8 @@
 
 == Summary
 
+#slide[
+  == Template Enhancements Summary
   
   This enhanced Monash template includes:
   
@@ -191,15 +159,14 @@
     [
       *Brand Compliance:*
       - Official Monash colors
-      - Helvetica Neue typography
       - Professional layouts
       - Accessible design
     ],
     [
       *New Features:*
-      - Info slides  
-      - Highlight slides
-      - Enhanced focus slides
+      - Enhanced standard slides
+      - Better typography
+      - Clean design
       - Better section dividers
     ]
   )
@@ -207,10 +174,10 @@
   #v(1em)
   
   Perfect for academic presentations, research talks, and professional meetings.
+]
 
-
-#focus-slide[
-  *Thank You!*
+#slide[
+  == Thank You!
   
-  Questions & Discussion
+  *Questions & Discussion*
 ]

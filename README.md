@@ -28,28 +28,27 @@ An enhanced version of the Touying Dewdrop theme customized with Monash Universi
 2. **Title Slide** - Enhanced with Monash brand colors and clean layout
 3. **Outline Slide** - Professional table of contents
 4. **Section Slides** - Full-screen section dividers with Monash Blue background
-5. **Focus Slide** - Emphasis slides with large text on Monash Blue background
-6. **Info Slide** - Information boxes with secondary blue styling
-7. **Highlight Slide** - Important announcements with Monash Red background
 
 ### ✨ Enhanced Features
 
-- **Improved typography** with Helvetica Neue throughout
+- **Improved typography** with modern sans-serif fonts
 - **Better text hierarchy** with color-coded heading levels
 - **Professional tables** with Monash brand styling
 - **Enhanced code blocks** with syntax highlighting
 - **Accessible color combinations** meeting WCAG guidelines
-- **Info and warning boxes** using brand colors
+- **Clean footer** - no distracting page numbers
+- **Logo support** - add SVG logo in top-right corner
 
 ## Usage
 
 ```typst
-#import "@preview/touying:0.6.1": *
-#import themes.dewdrop: *
+#import "dewdrop.typ": *
 
 #show: dewdrop-theme.with(
   aspect-ratio: "16-9",
   navigation: "mini-slides", // or "sidebar"
+  footer: none, // Clean footer with no text
+  logo: image("your-logo.svg", height: 2em), // Optional logo
   config-info(
     title: [Your Presentation Title],
     subtitle: [Subtitle],
@@ -59,7 +58,7 @@ An enhanced version of the Touying Dewdrop theme customized with Monash Universi
   ),
 )
 
-#title-slide(extra: [Your Department/Faculty])
+#title-slide()
 
 #outline-slide()
 
@@ -71,35 +70,22 @@ An enhanced version of the Touying Dewdrop theme customized with Monash Universi
   == Slide Title
   Your content here...
 ]
-
-// Use special slide types
-#info-slide[Important information]
-#focus-slide[Key Message]
-#highlight-slide[Critical Announcement]
 ```
 
-## Special Slide Functions
+## Logo Support
 
-### Info Slide
+To add a logo in the top-right corner:
+
 ```typst
-#info-slide[
-  This creates an information box with secondary blue styling
-]
+#show: dewdrop-theme.with(
+  // ... other parameters
+  logo: image("your-logo.svg", height: 2em),
+  // Or use text as logo:
+  // logo: text(size: 1.5em, fill: blue, weight: "bold", "LOGO"),
+)
 ```
 
-### Focus Slide
-```typst
-#focus-slide[
-  Large text on Monash Blue background for emphasis
-]
-```
-
-### Highlight Slide
-```typst
-#highlight-slide[
-  Important announcements with Monash Red background
-]
-```
+The logo will appear on all slides automatically.
 
 ## Typography Hierarchy
 

@@ -10,6 +10,16 @@
 #let monash-font = ("Liberation Sans", "DejaVu Sans", "Noto Sans")
 
 #let dewdrop-header(self) = {
+  // Add logo in top-right corner
+  if self.store.at("logo", default: none) != none {
+    place(
+      right + top,
+      dx: -1em,
+      dy: 1em,
+      self.store.logo
+    )
+  }
+  
   if self.store.navigation == "sidebar" {
     place(
       right + top,
@@ -41,20 +51,14 @@
       alpha: self.store.alpha,
       display-section: self.store.mini-slides.at("display-section", default: false),
       display-subsection: self.store.mini-slides.at("display-subsection", default: true),
-      linebreaks: self.store.mini-slides.at("linebreaks", default: true),
+      linebreaks: self.store.mini-slides.at("linebreaks", default: false),
       short-heading: self.store.mini-slides.at("short-heading", default: true),
     )
   }
 }
 
 #let dewdrop-footer(self) = {
-  set align(bottom)
-  set text(size: 0.8em)
-  show: pad.with(.5em)
-  components.left-and-right(
-    text(fill: self.colors.neutral-darkest.lighten(40%), utils.call-or-display(self, self.store.footer)),
-    text(fill: self.colors.neutral-darkest.lighten(20%), utils.call-or-display(self, self.store.footer-right)),
-  )
+  // Empty footer - no content displayed
 }
 
 /// Default slide function for the presentation.
@@ -274,76 +278,6 @@
 })
 
 
-/// Focus on some content with Monash branding.
-///
-/// Example: `#focus-slide[Wake up!]`
-/// 
-/// - config (dictionary): The configuration of the slide. You can use `config-xxx` to set the configuration of the slide. For more several configurations, you can use `utils.merge-dicts` to merge them.
-#let focus-slide(config: (:), body) = touying-slide-wrapper(self => {
-  self = utils.merge-dicts(
-    self,
-    config-common(freeze-slide-counter: true),
-    config-page(fill: self.colors.primary, margin: 2em),
-  )
-  set text(fill: self.colors.neutral-lightest, size: 1.8em, font: monash-font, weight: "bold")
-  touying-slide(self: self, config: config, align(horizon + center, body))
-})
-
-
-/// Create a slide with Monash-branded info box
-/// 
-/// Example: `#info-slide[This is important information]`
-/// 
-/// - config (dictionary): The configuration of the slide.
-#let info-slide(config: (:), body) = touying-slide-wrapper(self => {
-  self = utils.merge-dicts(
-    self,
-    config-page(
-      header: dewdrop-header,
-      footer: dewdrop-footer,
-    ),
-  )
-  let content = align(center + horizon, [
-    #block(
-      width: 85%,
-      fill: self.colors.secondary.lighten(95%),
-      stroke: (left: 4pt + self.colors.secondary, rest: 1pt + self.colors.secondary.lighten(70%)),
-      inset: 2em,
-      radius: 3pt,
-      [
-        #set text(fill: self.colors.neutral-darkest, font: monash-font)
-        #text(size: 1.2em, weight: "medium", body)
-      ]
-    )
-  ])
-  touying-slide(self: self, config: config, content)
-})
-
-
-/// Create a slide for highlighting key points with Monash accent color
-/// 
-/// Example: `#highlight-slide[Key Takeaway]`
-/// 
-/// - config (dictionary): The configuration of the slide.
-#let highlight-slide(config: (:), body) = touying-slide-wrapper(self => {
-  self = utils.merge-dicts(
-    self,
-    config-page(fill: self.colors.accent, margin: 2em),
-  )
-  set text(fill: self.colors.neutral-lightest, size: 1.6em, font: monash-font, weight: "bold")
-  let content = align(center + horizon, [
-    #block(
-      width: 90%,
-      inset: 1.5em,
-      stroke: 3pt + self.colors.neutral-lightest,
-      radius: 5pt,
-      body
-    )
-  ])
-  touying-slide(self: self, config: config, content)
-})
-
-
 /// Touying dewdrop theme enhanced with Monash University branding.
 ///
 /// This theme incorporates Monash University's official color palette, typography (Helvetica Neue),
@@ -424,6 +358,7 @@
   ),
   footer: none,
   footer-right: context utils.slide-counter.display() + " / " + utils.last-slide-number,
+  logo: none,  // SVG logo to display in top-right corner
   primary: rgb("#006dae"),
   alpha: 60%,
   subslide-preamble: self => block(
@@ -528,6 +463,7 @@
       mini-slides: mini-slides,
       footer: footer,
       footer-right: footer-right,
+      logo: logo,
       alpha: alpha,
       subslide-preamble: subslide-preamble,
     ),
