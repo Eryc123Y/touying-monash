@@ -10,16 +10,6 @@
 #let monash-font = ("Liberation Sans", "DejaVu Sans", "Noto Sans")
 
 #let dewdrop-header(self) = {
-  // Add logo in top-right corner
-  if self.store.at("logo", default: none) != none {
-    place(
-      right + top,
-      dx: -1em,
-      dy: 1em,
-      self.store.logo
-    )
-  }
-  
   if self.store.navigation == "sidebar" {
     place(
       right + top,
@@ -58,7 +48,15 @@
 }
 
 #let dewdrop-footer(self) = {
-  // Empty footer - no content displayed
+  // Add logo in bottom-right corner
+  if self.store.at("logo", default: none) != none {
+    place(
+      right + bottom,
+      dx: -0.5em,
+      dy: -0.5em,
+      self.store.logo
+    )
+  }
 }
 
 /// Default slide function for the presentation.
