@@ -69,9 +69,9 @@
   $ C_(i j) = sum_n A_(i n) dot B_(n j), $
   where $C$ is the resulting matrix, $n$ is the index over the shared dimension.
 
-  - Only one operation involved (IR maintains the *same instruction* for all data elements)
+  - Only one operation involved (IR maintains the *same instruction* for all data elements).
 
-  - Iteratively calculating inner products for each row of $A$ and column of $B$ (*Different data elements*)
+  - Iteratively calculating inner products for each row vector of $A$ and column vector of $B$ (*data in different memory locations*).
 ]
 
 #note-box[

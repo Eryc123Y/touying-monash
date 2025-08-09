@@ -1,5 +1,6 @@
 #import "/template/dewdrop.typ": *
-
+#import "@preview/theorion:0.4.0": *
+#show: show-theorion
 #show: dewdrop-theme.with(
   aspect-ratio: "16-9",
   logo: image(
@@ -35,7 +36,7 @@ This presentation template has been enhanced with:
 
 #v(1em)
 
-#note[This template follows Monash University's official brand guidelines for consistent professional appearance.]
+#note-box[This template follows Monash University's official brand guidelines for consistent professional appearance.]
 
 == Color Palette
 
@@ -96,13 +97,13 @@ Here are various content types with enhanced Monash styling:
 
 *Box environments for different purposes:*
 
-#note[Use this for general notes and important information that users should remember.]
+#note-box[Use this for general notes and important information that users should remember.]
 
-#info[This provides additional context and details about the current topic being discussed.]
+#important-box[This provides additional context and details about the current topic being discussed.]
 
-#warning[Critical information that requires immediate attention or could cause issues if ignored.]
+#warning-box[Critical information that requires immediate attention or could cause issues if ignored.]
 
-#tip[Helpful suggestions and best practices to improve user experience and results.]
+#tip-box[Helpful suggestions and best practices to improve user experience and results.]
 
 *Lists work beautifully:*
 1. Numbered lists use consistent spacing
